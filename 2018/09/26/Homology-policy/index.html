@@ -1,0 +1,488 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>浏览器同源策略 | Hi BLOG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="junwei">
+    
+
+    
+    <meta name="description" content="目的目的：保证用户信息的安全，防止窃取数据;同源： 协议相同， 域名相同， 端口相同； eg: https://www.wjunw.com     协议：https://，域名是www.example.com，端口是：80（默认可省略）； 限制1. Cookie, LocalStorage, IndexDB无法获取；   2. DOM 无法获取； 3. AJAX请求不能发送； 规避限制：一  C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器同源策略">
+<meta property="og:url" content="https://www.wjunw.com/2018/09/26/Homology-policy/index.html">
+<meta property="og:site_name" content="Hi BLOG">
+<meta property="og:description" content="目的目的：保证用户信息的安全，防止窃取数据;同源： 协议相同， 域名相同， 端口相同； eg: https://www.wjunw.com     协议：https://，域名是www.example.com，端口是：80（默认可省略）； 限制1. Cookie, LocalStorage, IndexDB无法获取；   2. DOM 无法获取； 3. AJAX请求不能发送； 规避限制：一  C">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-26T15:35:30.400Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器同源策略">
+<meta name="twitter:description" content="目的目的：保证用户信息的安全，防止窃取数据;同源： 协议相同， 域名相同， 端口相同； eg: https://www.wjunw.com     协议：https://，域名是www.example.com，端口是：80（默认可省略）； 限制1. Cookie, LocalStorage, IndexDB无法获取；   2. DOM 无法获取； 3. AJAX请求不能发送； 规避限制：一  C">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hi BLOG" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Hi BLOG" title="Hi BLOG"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hi BLOG">Hi BLOG</a></h1>
+				<h2 class="blog-motto">Let&#39;s grow together</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.wjunw.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/09/26/Homology-policy/" title="浏览器同源策略" itemprop="url">浏览器同源策略</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="junwei" target="_blank" itemprop="author">junwei</a>
+		
+  <p class="article-time">
+    <time datetime="2018-09-26T12:08:14.000Z" itemprop="datePublished"> Published 2018-09-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限制"><span class="toc-number">2.</span> <span class="toc-text">限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规避限制："><span class="toc-number">3.</span> <span class="toc-text">规避限制：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-Cookie"><span class="toc-number">3.1.</span> <span class="toc-text">一  Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-iframe"><span class="toc-number">3.2.</span> <span class="toc-text">二  iframe</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-片段标识符："><span class="toc-number">3.2.1.</span> <span class="toc-text">1. 片段标识符：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-window-name"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. window.name:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-window-postMessage"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. window.postMessage:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三：Ajax"><span class="toc-number">3.3.</span> <span class="toc-text">三：Ajax:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四：JSONP"><span class="toc-number">3.4.</span> <span class="toc-text">四：JSONP:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五：WebSocket"><span class="toc-number">3.5.</span> <span class="toc-text">五：WebSocket:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六：CORS"><span class="toc-number">3.6.</span> <span class="toc-text">六：CORS:</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>目的：保证用户信息的安全，防止窃取数据;<br>同源： 协议相同， 域名相同， 端口相同；</p>
+<pre><code>eg: https://www.wjunw.com
+    协议：https://，域名是www.example.com，端口是：80（默认可省略）；
+</code></pre><h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><pre><code>1. Cookie, LocalStorage, IndexDB无法获取；  
+2. DOM 无法获取；
+3. AJAX请求不能发送；
+</code></pre><h2 id="规避限制："><a href="#规避限制：" class="headerlink" title="规避限制："></a>规避限制：</h2><h3 id="一-Cookie"><a href="#一-Cookie" class="headerlink" title="一  Cookie"></a>一  Cookie</h3><p>两个网页一级域名相同，只是二级域名不同，可设置document.domain共享 Cookie；</p>
+<pre><code>eg:  A网页是http://w1.example.com/a.html，B网页是http://w2.example.com/b.html，
+     那么只要设置相同的document.domain，两个网页就可以共享Cookie; document.domain = &apos;example.com&apos;;
+
+    注意，这种方法只适用于 Cookie 和 iframe 窗口;
+</code></pre><p>服务器也可以在设置Cookie的时候，指定Cookie的所属域名为一级域名; </p>
+<pre><code>比如.example.com;
+Set-Cookie: key=value; domain=.example.com; path=/
+</code></pre><h3 id="二-iframe"><a href="#二-iframe" class="headerlink" title="二  iframe"></a>二  iframe</h3><p>如果两个网页不同源，就无法拿到对方的DOM。iframe窗口和window.open方法打开的窗口，它们与父窗口无法通信。<br>则可以使用以下方法：</p>
+<pre><code>1. 片段识别符：（fragment identifier）
+2. window.name              
+3. 跨文档通信API(Cross-document messaging)
+</code></pre><h4 id="1-片段标识符："><a href="#1-片段标识符：" class="headerlink" title="1. 片段标识符："></a>1. 片段标识符：</h4><p>是指；URL的#号后面的部分; 如果只是改变片段标识符，页面不会重新刷新；</p>
+<p>父窗口可以把信息写入子窗口的片段标识符。</p>
+<pre><code>document.getElementById(&apos;myIFrame&apos;).src =  originURL + &apos;#&apos; + data;
+</code></pre><p>子窗口通过监听 hashchange 事件：</p>
+<pre><code>window.onhashchange = () =&gt; {
+    const msg = window.location.hash
+}
+</code></pre><p>子窗口也可以改变父窗口的片段标识符：</p>
+<pre><code>parent.location.href = target + &apos;#&apos; + hash;
+</code></pre><h4 id="2-window-name"><a href="#2-window-name" class="headerlink" title="2. window.name:"></a>2. window.name:</h4><p>特点： 无论是否同源，只要在同一个窗口里，前一个网页设置了这个属性，后一个网页可以读取它；<br>window.name容量很大，可以放置非常长的字符串；缺点是必须监听子窗口window.name属性的变化，影响网页性能；</p>
+<h4 id="3-window-postMessage"><a href="#3-window-postMessage" class="headerlink" title="3. window.postMessage:"></a>3. window.postMessage:</h4><p>HTML5 API: 跨文档通信（Cross-document messaging）;<br>允许跨窗口通信，不论这两个窗口是否同源;<br>父窗口</p>
+<pre><code>var popup = window.open(&apos;http://bbb.com&apos;, &apos;title&apos;);
+popup.postMessage(&apos;Hello World!&apos;, &apos;http://bbb.com&apos;);
+
+或： 
+var win = document.getElementsByTagName(&apos;iframe&apos;)[0].contentWindow;
+var obj = { name: &apos;Jack&apos; };
+win.postMessage(JSON.stringify({key: &apos;storage&apos;, method: &quot;get&quot;}), &quot;*&quot;);
+window.onmessage = function(e) {
+if (e.origin != &apos;http://aaa.com&apos;) return;
+console.log(JSON.parse(e.data).name);
+};
+</code></pre><p>子窗口</p>
+<pre><code>window.opener.postMessage(&apos;Nice to see you&apos;, &apos;http://aaa.com&apos;);
+或 window.parent.postMessage(&apos;Nice to see you&apos;, &apos;http://aaa.com&apos;);
+</code></pre><p>父窗口和子窗口都可以通过message事件，监听对方的消息：</p>
+<pre><code>window.addEventListener(&apos;message&apos;, function(event) {
+// event.source：发送消息的窗口
+// event.origin: 消息发向的网址
+// event.data: 消息内容
+console.log(event.data);
+},false);
+</code></pre><p>子窗口通过event.source属性引用父窗口，然后发送消息：</p>
+<pre><code>window.addEventListener(&apos;message&apos;, function(event){
+    *，表示不限制域名，向所有窗口发送
+event.source.postMessage(&apos;Nice to see you!&apos;, &apos;*&apos;);
+});
+</code></pre><h3 id="三：Ajax"><a href="#三：Ajax" class="headerlink" title="三：Ajax:"></a>三：Ajax:</h3><p>AJAX请求只能发给同源的网址;<br>规避方法：</p>
+<pre><code>1.服务器代理
+2.JSONP
+3.WebSocket
+4.CORS
+</code></pre><h3 id="四：JSONP"><a href="#四：JSONP" class="headerlink" title="四：JSONP:"></a>四：JSONP:</h3><p>网页通过添加一个&lt;script&gt;元素，向服务器请求JSON数据，这种做法不受同源政策限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来;</p>
+<h3 id="五：WebSocket"><a href="#五：WebSocket" class="headerlink" title="五：WebSocket:"></a>五：WebSocket:</h3><p>WebSocket是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。</p>
+<h3 id="六：CORS"><a href="#六：CORS" class="headerlink" title="六：CORS:"></a>六：CORS:</h3><p>CORS需要浏览器和服务器同时支持;<br>CORS是跨源资源分享（Cross-Origin Resource Sharing）的缩写。它是W3C标准，是跨源AJAX请求的根本解决方法。相比JSONP只能发GET请求，CORS允许任何类型的请求;<br>整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。<br>实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://www.wjunw.com/2018/09/26/Homology-policy/" data-title="浏览器同源策略 | Hi BLOG" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限制"><span class="toc-number">2.</span> <span class="toc-text">限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规避限制："><span class="toc-number">3.</span> <span class="toc-text">规避限制：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-Cookie"><span class="toc-number">3.1.</span> <span class="toc-text">一  Cookie</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-iframe"><span class="toc-number">3.2.</span> <span class="toc-text">二  iframe</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-片段标识符："><span class="toc-number">3.2.1.</span> <span class="toc-text">1. 片段标识符：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-window-name"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. window.name:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-window-postMessage"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. window.postMessage:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三：Ajax"><span class="toc-number">3.3.</span> <span class="toc-text">三：Ajax:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四：JSONP"><span class="toc-number">3.4.</span> <span class="toc-text">四：JSONP:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五：WebSocket"><span class="toc-number">3.5.</span> <span class="toc-text">五：WebSocket:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六：CORS"><span class="toc-number">3.6.</span> <span class="toc-text">六：CORS:</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Welcome! <br/>
+			This is my blog</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6646165277" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="junwei">junwei</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
